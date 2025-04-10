@@ -7,11 +7,11 @@ body, html {
   }
   
 .hero-image {
-    background-image: url('map1.jpg'); /* Replace with your image */
-    background-size: cover;
-    background-position: center;
-    height: 400px;
-    position: relative;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.726), rgba(255, 255, 255, 0.726)), 
+                    url('https://st4.depositphotos.com/21486874/23723/v/450/depositphotos_237230256-stock-illustration-urban-vector-city-map-sanjose.jpg');
+  background-position: center;
+  height: 500px;
+  position: relative;
 }
 
 .search-box-container {
@@ -38,7 +38,7 @@ input[type="text"] {
     padding: 0 10px;
 }
 button {
-    width: 400px; /* Match this to input-with-icon width */
+    width: 450px; /* Match this to input-with-icon width */
     height: 45px;
     font-size: 20px;
     font-weight: bold;
