@@ -1,93 +1,97 @@
 body, html {
-    height: 100%;
-    margin: 0;
-}
-.button-wrapper {
-    width: 400px;
+        height: 100%;
+        margin: 0;
+    }
+    .button-wrapper {
+        width: 400px;
+      }
+      
+    .hero-image {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.726), rgba(255, 255, 255, 0.726)), 
+                        url('https://st4.depositphotos.com/21486874/23723/v/450/depositphotos_237230256-stock-illustration-urban-vector-city-map-sanjose.jpg');
+      background-position: center;
+      height: 500px;
+      position: relative;
+    }
+    .search-box-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 450px; /* Add this to constrain the whole group */
+      text-align: center; /* Optional: centers heading text */
+  }
+    
+    input[type="text"],
+    button {
+      width: 400px; /* Increased width */
+      height: 45px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    
+    input[type="text"] {
+        padding: 0 10px;
+    }
+    button {
+        width: 450px; /* Match this to input-with-icon width */
+        height: 45px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+        background-color: #69d9b0;
+        color: black;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #64cba5;
+    }
+    h1 {
+       /* Ensures it aligns with inputs */
+      color: black;
+      font-size: 40px;
+      margin-bottom: 10px;
+      text-align: center;
   }
   
-.hero-image {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.726), rgba(255, 255, 255, 0.726)), 
-                    url('https://st4.depositphotos.com/21486874/23723/v/450/depositphotos_237230256-stock-illustration-urban-vector-city-map-sanjose.jpg');
-  background-position: center;
-  height: 500px;
-  position: relative;
-}
-
-.search-box-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-input[type="text"],
-button {
-  width: 400px; /* Increased width */
-  height: 45px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: none;
-}
-
-input[type="text"] {
-    padding: 0 10px;
-}
-button {
-    width: 450px; /* Match this to input-with-icon width */
-    height: 45px;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    background-color:  #69d9b0;
-    color: black;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #64cba5;
-}
-
-h1 {
-    color: black;
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.libre-caslon-text-regular {
-    font-family: "Libre Caslon Text", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.input-with-icon {
-    position: relative;
-    width: 400px;
-  }
-  
-.input-with-icon .material-icons {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  color: black;
-  font-size: 24px;
-}
-
-.input-with-icon input[type="text"] {
-  width: 100%;
-  padding: 10px 10px 10px 40px; /* Add left padding for icon */
-  height: 45px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-}
-ul {
+    
+    .libre-caslon-text-regular {
+        font-family: "Libre Caslon Text", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+    
+    .input-with-icon {
+        position: relative;
+        width: 400px;
+      }
+      
+    .input-with-icon .material-icons {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: black;
+      font-size: 24px;
+    }
+    
+    .input-with-icon input[type="text"] {
+      width: 100%;
+      padding: 10px 10px 10px 40px; /* Add left padding for icon */
+      height: 45px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    /*nav bar */
+    ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
@@ -101,13 +105,107 @@ ul {
     
     li a {
       display: block;
-      font-size: 20px;
+      font-size: 22px;
       color: black;
       text-align: center;
-      padding: 14px 25px;
+      padding: 30px 25px;
       text-decoration: none;
     }
     
     li a:hover{
-      background-color:  #69d9b0;
+      background-color: #69d9b0;
+    }   
+    .heading-wrapper {
+      width: 450px;
+      text-align: center;
+     
+    }
+    /* zig zag image layout*/
+    .split-page {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* LEFT HALF */
+    .left-half {
+      flex: 1;
+      background-color: #fdfdfd;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .left-half h1 {
+      font-size: 3rem;
+      line-height: 1.5;
+    }
+  
+    /* RIGHT HALF */
+    .right-half {
+      flex: 1;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-container {
+      display: flex;
+      flex-direction: row; /* This arranges the two columns side by side */
+      gap: 30px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .column.right {
+      margin-top: 80px; /* Offset for unorganized layout */
+    }
+
+    .zz{
+      width: 250px;
+      height: 200px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      object-fit: cover;
+    }  
+    h2.lhl{
+      font-size: 25px;
+      line-height: 1.5;
+      color: black;
+      text-align: left;
     } 
+    h1.lhl{
+      font-size: 40px;
+      line-height: 1.6;
+      color: black;
+      text-align: left;
+    }
+    button.lhl {
+      color: black;
+      background-color: #69d9b0;
+      border-radius: 50px;
+      border: none;
+      width: fit-content;
+      cursor: pointer;
+      display: flex;              /* Add this */
+      align-items: center;        /* Vertically center text and icon */
+      gap: 8px;                   /* Optional: adds space between text and icon */
+      font-size: 18px;            /* Optional: consistent font size */
+      padding: 10px 20px;         /* Optional: adds spacing around content */
+    }
+    
+    
+
+
+
+
+
+    
+  
+ 
