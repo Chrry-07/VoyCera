@@ -44,13 +44,13 @@ button {
     font-weight: bold;
     border-radius: 5px;
     border: none;
-    background-color: #04AA6D;
+    background-color:  #69d9b0;
     color: black;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #028f5b;
+    background-color: #64cba5;
 }
 
 h1 {
@@ -109,5 +109,5 @@ ul {
     }
     
     li a:hover{
-      background-color: #04AA6D;
+      background-color:  #69d9b0;
     } 
