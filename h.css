@@ -129,7 +129,7 @@ body, html {
     /* LEFT HALF */
     .left-half {
       flex: 1;
-      background-color: #fdfdfd;
+      background-color: #f4f4f4;
       padding: 60px;
       display: flex;
       flex-direction: column;
@@ -175,7 +175,7 @@ body, html {
       object-fit: cover;
     }  
     h2.lhl{
-      font-size: 25px;
+      font-size: 27px;
       line-height: 1.5;
       color: black;
       text-align: left;
@@ -199,13 +199,100 @@ body, html {
       font-size: 18px;            /* Optional: consistent font size */
       padding: 10px 20px;         /* Optional: adds spacing around content */
     }
-    
-    
-
-
-
-
-
-    
-  
- 
+    /*Our Services*/
+    div.service {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+    }
+    .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 500;
+      font-family: "Libre Caslon Text", serif;
+      color: black;
+    }
+    .service-item p {
+      margin-top: 20px;
+    }
+    img.ib{
+      width: 200px;
+      height: 140px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      object-fit: cover;
+    }
+    .service-item img.ib:hover {
+      box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4);
+    }
+    /*Safety Section*/
+    div.safesec {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .leftsec{
+      flex:1;
+      background-color: #f4f4f4;
+      align-items: center;
+      justify-content: center;
+      padding:97px;
+    }
+    .rightsec{
+      flex:1;
+      background-color: #f4f4f4;
+      align-items: center;
+      justify-content: center;
+    }
+    img.ss{
+      border-radius: 12px;
+    }
+    h2.rhs{
+      font-size: 27px;
+      line-height: 1.5;
+      color: black;
+      text-align: left;
+    } 
+    h1.rhs{
+      font-size: 40px;
+      line-height: 1.6;
+      color: black;
+      text-align: left;
+    }
+    div.safesec {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height:100vh;
+      background-color: #f4f4f4;
+    }
+    button.rhs {
+      color: black;
+      background-color: #69d9b0;
+      border-radius: 50px;
+      border: none;
+      width: fit-content;
+      cursor: pointer;
+      display: flex;              /* Add this */
+      align-items: center;        /* Vertically center text and icon */
+      gap: 8px;                   /* Optional: adds space between text and icon */
+      font-size: 18px;            /* Optional: consistent font size */
+      padding: 10px 20px;         /* Optional: adds spacing around content */
+    }
+    /*Icons*/
+    .icon {
+      text-decoration: none;
+      color: black;
+      font-size: 20px;
+      margin: 0 20px;
+      display:block;
+      padding-left: 40px;
+      padding-top: 20px;
+    }
