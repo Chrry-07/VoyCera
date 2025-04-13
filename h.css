@@ -7,6 +7,7 @@ body, html {
       }
       
     .hero-image {
+      margin-top: 80px;
       background-image: linear-gradient(rgba(255, 255, 255, 0.726), rgba(255, 255, 255, 0.726)), 
                         url('https://st4.depositphotos.com/21486874/23723/v/450/depositphotos_237230256-stock-illustration-urban-vector-city-map-sanjose.jpg');
       background-position: center;
@@ -92,11 +93,16 @@ body, html {
     }
     /*nav bar */
     ul {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000; /* ensure it's above everything */
       list-style-type: none;
       margin: 0;
       padding: 0;
-      overflow: hidden;
       background-color: white;
+      list-style-type: none;
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
     
     li {
