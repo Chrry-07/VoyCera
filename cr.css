@@ -72,7 +72,7 @@ body, html {
 }
   
 .nav-bar li a:hover{
-  background-color: #69d9b0;
+  color: #69d9b0;
 }   
 
 .top-nav {
@@ -115,14 +115,15 @@ body, html {
 }
 
 .step-in-container {
-  background-color: #ffffff; /* White background for the component */
+  background-color: #69d9b08e;
   border-radius: 15px; /* Rounded corners */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
   display: flex; /* Use flexbox for columns */
   max-width: 1100px; /* Maximum width of the container */
   width: 100%;
   overflow: hidden; /* Ensure content respects border radius */
-  margin: 20px; /* Add margin */
+  margin: 80px; 
+  margin-left: 160px;
 }
 
 .text-content {

@@ -119,14 +119,15 @@ body, html {
     }
     
     li a:hover{
-      background-color: #69d9b0;
-    }   
+      color: #69d9b0;
+    }  
+
     .heading-wrapper {
       width: 450px;
       text-align: center;
      
     }
-    /* zig zag image layout*/
+
     .split-page {
       display: flex;
       height: 100vh;
@@ -235,7 +236,7 @@ body, html {
     .service-item img.ib:hover {
       box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4);
     }
-    /*Safety Section*/
+
     div.safesec {
       display: flex;
       flex-direction: row;
