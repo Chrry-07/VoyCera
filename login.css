@@ -31,6 +31,7 @@ body {
   .login-container button {
     width: 100%;
     padding: 12px;
+    margin-top: 15px;
     background-color: #69d9b0;
     color: white;
     border: none;
@@ -102,7 +103,7 @@ li {
 li a {
   display: block;
   font-size: 22px;
-  color: black;
+  color: #11022a;
   text-align: center;
   padding: 30px 25px;
   text-decoration: none;

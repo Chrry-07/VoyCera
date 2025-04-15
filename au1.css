@@ -23,7 +23,7 @@ li {
 li a {
   display: block;
   font-size: 22px;
-  color: black;
+  color: #11022a;
   text-align: center;
   padding: 30px 25px;
   text-decoration: none;
@@ -40,7 +40,7 @@ li a:hover{
 
 .icon {
   text-decoration: none;
-  color: black;
+  color: #11022a;
   font-size: 20px;
   margin: 0 20px;
   display:block;
@@ -68,7 +68,7 @@ video {
 .text-container {
   margin: 150px;
   text-align: center;
-  color: #000000;
+  color: #11022a;
   margin-bottom: 60px;
   transform: translateY(20px); 
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
@@ -102,7 +102,7 @@ video {
   padding-left: 120px;
   padding-right: 120px;
   margin-left: 250px;
-  border: 2px solid #181818;
+  border: 2px solid #11022a;
   text-align: center;
   background-color: #69d9b08e;
   display: flex; 
@@ -135,4 +135,27 @@ video {
   .s1 {
     width: 48%;
   }
+}
+
+div.icons{
+  background-color: #BAE8D4;
+}
+/*Footer*/
+
+div.foot {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 30px; /* controls spacing between items */
+flex-wrap: nowrap; /* ensures all items stay on the same line */
+padding:20px 30px;
+background-color: #BAE8D4;
+color: black;
+overflow-x: auto; /* helpful if screen gets too narrow */
+}
+
+div.foot a {
+text-decoration: none;
+color: black;
+font-size: 20px;
 }
