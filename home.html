@@ -28,15 +28,15 @@
       </div>
         <div class="input-with-icon">
             <span class="material-icons">location_on</span>
-            <input type="text" placeholder="Enter Pickup Location">
+            <input type="text"  id="pickup"  placeholder="Enter Pickup Location">
           </div>
           
           <div class="input-with-icon">
             <span class="material-icons">location_searching</span>
-            <input type="text" placeholder="Enter Drop Location">
+            <input type="text" id="drop" placeholder="Enter Drop Location">
           </div>
           <div class="button-wrapper">
-            <button>Book Ride</button>
+            <button id="submitBtn">Book Ride</button>
           </div>
         
     </div>
@@ -46,20 +46,28 @@
 <br><br><br>
 <div class="service">
   <div class="service-item">
-    <img class="ib" src="car.png" style="width: 200px; height: 140px;">
-    <p>Car</p>
+    <a href="book.html?vehicle=car" style="text-decoration: none; color: black;">
+      <img class="ib" src="car.png" style="width: 200px; height: 140px;">
+      <p>Car</p>
+    </a>
   </div>
   <div class="service-item">
-    <img class="ib" src="bike.png" style="width: 200px; height: 140px;">
-    <p>Bike</p>
+    <a href="book1.html?vehicle=bike" style="text-decoration: none; color: black;">
+      <img class="ib" src="bike.png" style="width: 200px; height: 140px;">
+      <p>Bike</p>
+    </a>
   </div>
   <div class="service-item">
-    <img class="ib" src="auto.png" style="width: 200px; height: 140px;">
-    <p>Auto</p>
+    <a href="book2.html?vehicle=bike" style="text-decoration: none; color: black;">
+      <img class="ib" src="auto.png" style="width: 200px; height: 140px;">
+      <p>Auto</p>
+    </a>
   </div>
   <div class="service-item">
-    <img class="ib" src="box.png" style="width: 200px; height: 140px;">
-    <p>Delivery</p>
+    <a href="book3.html?vehicle=p" style="text-decoration: none; color: black;">
+      <img class="ib" src="box.png" style="width: 200px; height: 140px;">
+      <p>Delivery</p>
+    </a>
   </div>
 </div>
 
@@ -69,7 +77,7 @@
   <div class="left-half">
     <h1 class="lhl">Get Quick Rides,<br>Low Fares</h1>
     <h2 class="lhl" style="color:#69d9b0">In <span style="color:black">VoyCera</span> we ensure our <br>customers get rides quickly<br> at the most affordable prices.</h2>
-    <button class="lhl">Book a ride<span class="material-symbols-outlined">
+    <button class="lhl" onclick="window.location.href='book.html'">Book a ride<span class="material-symbols-outlined">
       arrow_forward
       </span></button>
   </div>
@@ -95,7 +103,7 @@
     <div class="rightsec">
       <h1 class="rhs" style="color:#69d9b0">Safety for all</h1>
     <h2 class="rhs">At <span style="color:#69d9b0">VoyCera</span> , your safety is our<br>priority. We’re dedicated to<br>making every ride safe and<br>comfortable.</h2>
-    <button class="rhs">Learn More<span class="material-symbols-outlined">
+    <button class="rhs" onclick="window.location.href='safe.html'">Learn More<span class="material-symbols-outlined">
       arrow_forward
       </span></button>
     </div>
@@ -105,34 +113,53 @@
 <hr>
 <div style="background-color: #BAE8D4;padding:30px">
   <img src="l2t.png" alt="Logo" style="width: 150px; height: 70px; margin-right: 20px; margin-top: 5px;">
-<div class="foot">
+  <div class="foot">
       
-  <a href="home.html" class="icon">Home</a>
-  <a href="safe.html" class="icon"  >Safety</a>
-  <a href="about.html" class="icon" >About Us</a>
-  <a href="contact.html"  class="icon">Contact Us</a>
-  <a href="https://twitter.com" target="_blank" style="margin-left:190px; color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-x-twitter"></i>
-  </a>
+      <a href="home.html" class="icon">Home</a>
+      <a href="safe.html" class="icon"  >Safety</a>
+      <a href="about.html" class="icon" >About Us</a>
+      <a href="contact.html"  class="icon">Contact Us</a>
+      <a href="https://twitter.com" target="_blank" style="margin-left:190px; color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+    
+      <!-- Instagram -->
+      <a href="https://instagram.com" target="_blank" style=" color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-instagram"></i>
+      </a>
+    
+      <!-- YouTube -->
+      <a href="https://youtube.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-youtube"></i>
+      </a>
+    
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <br><br>
+  </div>
+  <div style="text-align: left; background-color:#BAE8D4 ; color: black;">
+    <p style="font-size: 18px; color: rgba(17, 2, 2, 0.5);">&copy; 2023 VoyCera. All rights reserved.</p>
+  </div>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', () => {
+        const pickupLocation = document.getElementById('pickup').value;
+        const dropLocation = document.getElementById('drop').value;
+      
+        if (pickupLocation && dropLocation) {
+          // Save the locations to localStorage
+          localStorage.setItem('pickupLocation', pickupLocation);
+          localStorage.setItem('dropLocation', dropLocation);
+          
+          // Redirect to the booking page
+          window.location.href = 'booking.html';
+        } else {
+          alert("Please enter both pickup and drop locations.");
+        }
+      });
+      
+  </script>
 
-  <!-- Instagram -->
-  <a href="https://instagram.com" target="_blank" style=" color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-instagram"></i>
-  </a>
-
-  <!-- YouTube -->
-  <a href="https://youtube.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-youtube"></i>
-  </a>
-
-  <!-- LinkedIn -->
-  <a href="https://linkedin.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-linkedin"></i>
-  </a>
-  <br><br>
-</div>
-<div style="text-align: left; background-color:#BAE8D4 ; color: black;">
-  <p style="font-size: 18px; color: rgba(17, 2, 2, 0.5);">&copy; 2023 VoyCera. All rights reserved.</p>
-</div>
 </body>
 </html>
