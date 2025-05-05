@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VoyCera - Ride Booking</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+    }
+
+    p {
+      font-size: 40px;
+      color: #009688;
+      text-align: center;
+      font-weight: 600;
+      margin-top: 30px;
+      margin-bottom: 40px;
+    }
+
+    .input-box {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      max-width: 700px;
+      margin: auto;
+      margin-bottom: 30px;
+    }
+
+    .input-box input {
+      padding: 12px 16px;
+      width: 45%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    .input-box input:focus {
+      border-color: #00bfa5;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0,191,165,0.3);
+    }
+
+    #map {
+      height: 500px;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      margin-bottom: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .fare-box {
+        margin: 20px auto;
+        padding: 25px 30px;
+        background-color: #e6fff6; /* softer mint background */
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(30, 201, 172, 0.4);
+        max-width: 450px;
+        text-align: center;
+        font-size: 18px;
+        color: #1e4d4d;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid #b2f0de;
+      }
+      .fare-box span {
+        display: block;
+        margin: 12px 0;
+      }
+      
+  </style>
+</head>
+<body>
+
+  <p>VoyCera - Bike Booking</p>
+
+  <!-- Input for Pickup and Drop Locations -->
+  <div class="input-box">
+    <input type="text" id="pickup" placeholder="Enter Pickup Location" />
+    <input type="text" id="drop" placeholder="Enter Drop Location" />
+  </div>
+
+  <div id="map"></div>
+
+  <div class="fare-box">
+    <span id="distance">Distance: Not calculated</span>
+    <span id="fare">Fare via Bike: ₹0</span>
+    <button onclick="showPaymentPopup()" style="margin-top: 20px; padding: 12px 24px; font-size: 16px; background-color: #009688; color: white; border: none; border-radius: 8px; cursor: pointer;">Book Ride</button>
+
+  </div>
+
+  <script>
+    window.onload = function () {
+      const apiKey = "5b3ce3597851110001cf6248ad4855180eb34974baccec9b98e4b01f";
+      const rates = { car: 15, bike: 10, auto: 12 };
+      let pickupMarker = null, dropMarker = null, routeLine = null;
+
+      const map = L.map('map').setView([17.385044, 78.486671], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      function geocode(query, callback) {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.length > 0) {
+              const latlng = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+              callback(latlng);
+            } else {
+              alert("Location not found: " + query);
+            }
+          });
+      }
+
+      function calculateFare(km) {
+        const rate = rates.bike;
+        const fare = (rate * km).toFixed(2);
+        document.getElementById('distance').textContent = `Distance: ${km} km`;
+        document.getElementById('fare').textContent = `Fare via Bike: ₹${fare}`;
+      }
+
+      function updateMap(pickupCoords, dropCoords) {
+        if (pickupMarker) map.removeLayer(pickupMarker);
+        if (dropMarker) map.removeLayer(dropMarker);
+
+        pickupMarker = L.marker(pickupCoords).addTo(map).bindPopup("Pickup Location").openPopup();
+        dropMarker = L.marker(dropCoords).addTo(map).bindPopup("Drop Location").openPopup();
+
+        map.fitBounds([pickupCoords, dropCoords]);
+      }
+
+      function calculateRoute(pickup, drop) {
+        fetch('https://api.openrouteservice.org/v2/directions/driving-car/geojson', {
+          method: 'POST',
+          headers: {
+            'Authorization': apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            coordinates: [
+              [pickup[1], pickup[0]],
+              [drop[1], drop[0]]
+            ]
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          const distance = data.features[0].properties.summary.distance;
+          const km = (distance / 1000).toFixed(2);
+          calculateFare(km);
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.geoJSON(data).addTo(map);
+        });
+      }
+
+      function triggerRouting() {
+        const pickupVal = document.getElementById('pickup').value;
+        const dropVal = document.getElementById('drop').value;
+
+        if (pickupVal && dropVal) {
+          geocode(pickupVal, function(pickupCoords) {
+            geocode(dropVal, function(dropCoords) {
+              updateMap(pickupCoords, dropCoords);
+              calculateRoute(pickupCoords, dropCoords);
+            });
+          });
+        }
+      }
+
+      document.getElementById('pickup').addEventListener('blur', triggerRouting);
+      document.getElementById('drop').addEventListener('blur', triggerRouting);
+    };
+    function showPaymentPopup() {
+      document.getElementById('paymentPopup').style.display = 'flex';
+    }
+    
+    function closePopup() {
+      document.getElementById('paymentPopup').style.display = 'none';
+    }
+    
+    function selectPayment(method) {
+      closePopup();
+      alert("Ride booked! Payment mode: " + method);
+    }
+    
+  </script>
+  <div id="paymentPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 300px;">
+      <h2>Select Payment Method</h2>
+      <button onclick="selectPayment('Cash')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Cash</button>
+      <button onclick="selectPayment('Card')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Card</button>
+      <br/><br/>
+      <button onclick="closePopup()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer;">Cancel</button>
+    </div>
+  </div>
+  
+</body>
+</html>

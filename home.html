@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" href="l1.jpeg" type="image/png">
-    <link href="h.css" rel="stylesheet" type="text/css">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Corinthia:wght@400;700&family=Dancing+Script:wght@400..700&family=Delius&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Emilys+Candy&family=Grenze+Gotisch:wght@100..900&family=Kavoon&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Macondo&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Paprika&family=Poiret+One&family=Poppins&family=Quicksand:wght@300..700&family=Rye&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
-    <title>VoyCera</title>
-    </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="l1.jpeg" type="image/png">
+  <link href="h.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Corinthia:wght@400;700&family=Dancing+Script:wght@400..700&family=Delius&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Emilys+Candy&family=Grenze+Gotisch:wght@100..900&family=Kavoon&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Macondo&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Paprika&family=Poiret+One&family=Poppins&family=Quicksand:wght@300..700&family=Rye&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+  <title>VoyCera</title>
+</head>
 <body style="font-family: Libre Caslon Text, serif;">
   <ul>
     <a href="home.html"><img src="l2.jpeg" alt="Logo" style="width: 250px; height: 75px;margin-left:20px; margin-right: 20px; margin-top: 5px;"></a>
@@ -20,48 +21,54 @@
     <li><a href="au1.html">About Us</a></li>
     <li><a href="safe.html">Safety</a></li>
     <li><a href="home.html">Home</a></li>
-</ul>
-<div class="hero-image">
+  </ul>
+  <div class="hero-image">
     <div class="search-box-container">
       <div class="heading-wrapper">
         <p style="font-size:40px"><span style="color:#69d9b0;font-size:50px">VoyCera</span><br>an era of new Voyage!</p>
       </div>
-        <div class="input-with-icon">
-            <span class="material-icons">location_on</span>
-            <input type="text" placeholder="Enter Pickup Location">
-          </div>
-          
-          <div class="input-with-icon">
-            <span class="material-icons">location_searching</span>
-            <input type="text" placeholder="Enter Drop Location">
-          </div>
-          <div class="button-wrapper">
-            <button>Book Ride</button>
-          </div>
-        
+      <div class="input-with-icon">
+        <span class="material-icons">location_on</span>
+        <input type="text"  id="pickup"  placeholder="Enter Pickup Location">
+      </div>
+      <div class="input-with-icon">
+        <span class="material-icons">location_searching</span>
+        <input type="text" id="drop" placeholder="Enter Drop Location">
+      </div>
+      <div class="button-wrapper">
+        <button id="submitBtn">Book Ride</button>
+      </div>
     </div>
-</div>
+  </div>
 <br><br><br>
-<h1 style="font-size: 40px; color: black;text-align:left;padding-left:60px">Our Services</h1>
+  <h1 style="font-size: 40px; color: black;text-align:left;padding-left:60px">Our Services</h1>
 <br><br><br>
-<div class="service">
-  <div class="service-item">
-    <img class="ib" src="car.png" style="width: 200px; height: 140px;">
-    <p>Car</p>
+  <div class="service">
+    <div class="service-item">
+      <a href="book.html?vehicle=car" style="text-decoration: none; color: black;">
+        <img class="ib" src="car.png" style="width: 200px; height: 140px;">
+        <p>Car</p>
+      </a>
+    </div>
+    <div class="service-item">
+      <a href="book1.html?vehicle=bike" style="text-decoration: none; color: black;">
+        <img class="ib" src="bike.png" style="width: 200px; height: 140px;">
+        <p>Bike</p>
+      </a>
+    </div>
+    <div class="service-item">
+      <a href="book2.html?vehicle=bike" style="text-decoration: none; color: black;">
+        <img class="ib" src="auto.png" style="width: 200px; height: 140px;">
+        <p>Auto</p>
+      </a>
+    </div>
+    <div class="service-item">
+      <a href="book3.html?vehicle=p" style="text-decoration: none; color: black;">
+        <img class="ib" src="box.png" style="width: 200px; height: 140px;">
+        <p>Delivery</p>
+      </a>
+    </div>
   </div>
-  <div class="service-item">
-    <img class="ib" src="bike.png" style="width: 200px; height: 140px;">
-    <p>Bike</p>
-  </div>
-  <div class="service-item">
-    <img class="ib" src="auto.png" style="width: 200px; height: 140px;">
-    <p>Auto</p>
-  </div>
-  <div class="service-item">
-    <img class="ib" src="box.png" style="width: 200px; height: 140px;">
-    <p>Delivery</p>
-  </div>
-</div>
 
 <br><br><br>
 <div class="split-page">
@@ -69,7 +76,7 @@
   <div class="left-half">
     <h1 class="lhl">Get Quick Rides,<br>Low Fares</h1>
     <h2 class="lhl" style="color:#69d9b0">In <span style="color:black">VoyCera</span> we ensure our <br>customers get rides quickly<br> at the most affordable prices.</h2>
-    <button class="lhl">Book a ride<span class="material-symbols-outlined">
+    <button class="lhl" onclick="window.location.href='book.html'">Book a ride<span class="material-symbols-outlined">
       arrow_forward
       </span></button>
   </div>
@@ -95,9 +102,38 @@
     <div class="rightsec">
       <h1 class="rhs" style="color:#69d9b0">Safety for all</h1>
     <h2 class="rhs">At <span style="color:#69d9b0">VoyCera</span> , your safety is our<br>priority. We’re dedicated to<br>making every ride safe and<br>comfortable.</h2>
-    <button class="rhs">Learn More<span class="material-symbols-outlined">
+    <button class="rhs" onclick="window.location.href='safe.html'">Learn More<span class="material-symbols-outlined">
       arrow_forward
       </span></button>
+    </div>
+  </div>
+</div>
+<div class="section__container" style="padding: 40px;">
+  <div class="header">
+    <h1>What our clients say about us.</h1>
+  </div>
+  <br><br><br>
+  <div class="testimonials__grid">
+    <div class="card">
+      <span><i class="ri-double-quotes-l"></i></span>
+      <p>“I booked a cab last minute for an early morning airport drop, and the driver arrived right on time. The car was clean, the driver was polite and even helped with my luggage."</p>
+      <hr />
+      <img src="https://easy-peasy.ai/cdn-cgi/image/quality=70,format=auto,width=300/https://media.easy-peasy.ai/5578c979-403c-4e75-b7dd-8b78f75e7319/3631ca14-1b38-4556-83de-2e5b3108138a.png" alt="user" />
+      <p class="name">Rohit Mehra</p>
+    </div>
+    <div class="card">
+      <span><i class="ri-double-quotes-l"></i></span>
+      <p>“The booking process was super easy and transparent. Our driver, Imran, knew all the shortcuts and avoided traffic brilliantly.</p>
+      <hr />
+      <img src="https://storage.googleapis.com/ares-profile-pictures/hd/imapeksha9-6ce8fde22a4485a07429512f1a60467d_hd.jpg" alt="user" />
+      <p class="name">Aarti Deshmukh</p>
+    </div>
+    <div class="card">
+      <span><i class="ri-double-quotes-l"></i></span>
+      <p> It was a smooth, safe ride—especially appreciated as I was traveling alone late in the evening. Highly recommended!</p>
+      <hr />
+      <img src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA4L3Jhd3BpeGVsX29mZmljZV8zNV9iZWF1dGlmdWxfc21pbGluZ195b3VuZ19pbmRpYW5fYnVzaW5lc3Nfd29tYV8yYWM3MjMyNS1jZmU3LTQ5ODgtODBkNi03YjViZTg3ODYzNjNfMS5qcGc.jpg" alt="user" />
+      <p class="name">Neha Kapoor</p>
     </div>
   </div>
 </div>
@@ -105,34 +141,67 @@
 <hr>
 <div style="background-color: #BAE8D4;padding:30px">
   <img src="l2t.png" alt="Logo" style="width: 150px; height: 70px; margin-right: 20px; margin-top: 5px;">
-<div class="foot">
+  <div class="foot">
       
-  <a href="home.html" class="icon">Home</a>
-  <a href="safe.html" class="icon"  >Safety</a>
-  <a href="about.html" class="icon" >About Us</a>
-  <a href="contact.html"  class="icon">Contact Us</a>
-  <a href="https://twitter.com" target="_blank" style="margin-left:190px; color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-x-twitter"></i>
-  </a>
+      <a href="home.html" class="icon">Home</a>
+      <a href="safe.html" class="icon"  >Safety</a>
+      <a href="about.html" class="icon" >About Us</a>
+      <a href="contact.html"  class="icon">Contact Us</a>
+      <a href="https://twitter.com" target="_blank" style="margin-left:190px; color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+    
+      <!-- Instagram -->
+      <a href="https://instagram.com" target="_blank" style=" color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-instagram"></i>
+      </a>
+    
+      <!-- YouTube -->
+      <a href="https://youtube.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-youtube"></i>
+      </a>
+    
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <br><br>
+  </div>
+  <div style="text-align: left; background-color:#BAE8D4 ; color: black;">
+    <p style="font-size: 18px; color: rgba(17, 2, 2, 0.5);">&copy; 2023 VoyCera. All rights reserved.</p>
+  </div>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', () => {
+        const pickupLocation = document.getElementById('pickup').value;
+        const dropLocation = document.getElementById('drop').value;
+      
+        if (pickupLocation && dropLocation) {
+          // Save the locations to localStorage
+          localStorage.setItem('pickupLocation', pickupLocation);
+          localStorage.setItem('dropLocation', dropLocation);
+          
+          // Redirect to the booking page
+          window.location.href = 'booking.html';
+        } else {
+          alert("Please enter both pickup and drop locations.");
+        }
+      });
 
-  <!-- Instagram -->
-  <a href="https://instagram.com" target="_blank" style=" color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-instagram"></i>
-  </a>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".card");
 
-  <!-- YouTube -->
-  <a href="https://youtube.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-youtube"></i>
-  </a>
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+            observer.unobserve(entry.target); // Stop observing once animated
+          }
+        });
+      }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
 
-  <!-- LinkedIn -->
-  <a href="https://linkedin.com" target="_blank" style="color: black; font-size: 40px;text-decoration: none">
-    <i class="fab fa-linkedin"></i>
-  </a>
-  <br><br>
-</div>
-<div style="text-align: left; background-color:#BAE8D4 ; color: black;">
-  <p style="font-size: 18px; color: rgba(17, 2, 2, 0.5);">&copy; 2023 VoyCera. All rights reserved.</p>
-</div>
+      cards.forEach((card) => observer.observe(card));
+    });
+</script>
+
 </body>
 </html>

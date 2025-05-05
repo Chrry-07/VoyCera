@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VoyCera - Package Delivery</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 42px;
+      color: #009688;
+      margin-bottom: 10px;
+    }
+
+    .input-box {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      max-width: 700px;
+    }
+
+    .input-box input {
+      padding: 12px 16px;
+      width: 45%;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: 0.3s ease;
+    }
+
+    .input-box input:focus {
+      outline: none;
+      border-color: #009688;
+      box-shadow: 0 0 10px rgba(0, 150, 136, 0.3);
+    }
+
+    #map {
+      height: 500px;
+      width: 90%;
+      margin: 0 auto 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .fare-box {
+      background-color: #e0fff4;
+      border-radius: 16px;
+      padding: 25px;
+      max-width: 400px;
+      margin: 0 auto 40px;
+      box-shadow: 0 4px 20px rgba(30, 201, 172, 0.4);
+      text-align: center;
+      font-size: 18px;
+      color: #00695c;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .fare-box span {
+      display: block;
+      margin: 12px 0;
+      font-size: 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .input-box {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .input-box input {
+        width: 90%;
+      }
+
+      header h1 {
+        font-size: 32px;
+      }
+
+      .fare-box {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>VoyCera - Package Delivery</h1>
+  </header>
+
+  <div class="input-box">
+    <input type="text" id="pickup" placeholder="Enter Pickup Location" />
+    <input type="text" id="drop" placeholder="Enter Drop Location" />
+  </div>
+
+  <div id="map"></div>
+
+  <div class="fare-box">
+    <span id="distance">Distance: Not calculated</span>
+    <span id="fare">Fare to deliver parcel: ₹0</span>
+    <button onclick="showPaymentPopup()" style="margin-top: 20px; padding: 12px 24px; font-size: 16px; background-color: #009688; color: white; border: none; border-radius: 8px; cursor: pointer;">Deliver</button>
+
+  </div>
+
+  <script>
+    window.onload = function () {
+      const apiKey = "5b3ce3597851110001cf6248ad4855180eb34974baccec9b98e4b01f";
+      const rates = { car: 15, bike: 10, auto: 12 ,p:20 };
+      let pickupMarker = null, dropMarker = null, routeLine = null;
+
+      const map = L.map('map').setView([17.385044, 78.486671], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      function geocode(query, callback) {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.length > 0) {
+              const latlng = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+              callback(latlng);
+            } else {
+              alert("Location not found: " + query);
+            }
+          });
+      }
+
+      function calculateFare(km) {
+        const rate = rates.p;
+        const fare = (rate * km).toFixed(2);
+        document.getElementById('distance').textContent = `Distance: ${km} km`;
+        document.getElementById('fare').textContent = `Fare to deliver parcel: ₹${fare}`;
+      }
+
+      function updateMap(pickupCoords, dropCoords) {
+        if (pickupMarker) map.removeLayer(pickupMarker);
+        pickupMarker = L.marker(pickupCoords).addTo(map).bindPopup("Pickup Location").openPopup();
+
+        if (dropMarker) map.removeLayer(dropMarker);
+        dropMarker = L.marker(dropCoords).addTo(map).bindPopup("Drop Location").openPopup();
+
+        map.fitBounds([pickupMarker.getLatLng(), dropMarker.getLatLng()]);
+      }
+
+      function calculateRoute(pickupLocation, dropLocation) {
+        fetch('https://api.openrouteservice.org/v2/directions/driving-car/geojson', {
+          method: 'POST',
+          headers: {
+            'Authorization': apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            coordinates: [
+              [pickupLocation[1], pickupLocation[0]],
+              [dropLocation[1], dropLocation[0]]
+            ]
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          const distance = data.features[0].properties.summary.distance;
+          const km = (distance / 1000).toFixed(2);
+          calculateFare(km);
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.geoJSON(data).addTo(map);
+        });
+      }
+
+      function handleInput() {
+        const pickupLocation = document.getElementById('pickup').value;
+        const dropLocation = document.getElementById('drop').value;
+
+        if (pickupLocation && dropLocation) {
+          geocode(pickupLocation, function (pickupCoords) {
+            geocode(dropLocation, function (dropCoords) {
+              updateMap(pickupCoords, dropCoords);
+              calculateRoute(pickupCoords, dropCoords);
+            });
+          });
+        }
+      }
+
+      document.getElementById('pickup').addEventListener('blur', handleInput);
+      document.getElementById('drop').addEventListener('blur', handleInput);
+    };
+    function showPaymentPopup() {
+      document.getElementById('paymentPopup').style.display = 'flex';
+    }
+    
+    function closePopup() {
+      document.getElementById('paymentPopup').style.display = 'none';
+    }
+    
+    function selectPayment(method) {
+      closePopup();
+      alert("Delivery Confirmed! Payment mode: " + method);
+    }
+    
+  </script>
+  <div id="paymentPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 300px;">
+      <h2>Select Payment Method</h2>
+      <button onclick="selectPayment('Cash')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Cash</button>
+      <button onclick="selectPayment('Card')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Card</button>
+      <br/><br/>
+      <button onclick="closePopup()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer;">Cancel</button>
+    </div>
+  </div>
+  
+</body>
+</html>

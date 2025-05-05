@@ -41,11 +41,11 @@ body, html {
 .step-in-container {
   background-color: #69d9b08e;
   border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
-  display: flex; /* Use flexbox for columns */
-  max-width: 1100px; /* Maximum width of the container */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+  display: flex; 
+  max-width: 1100px;
   width: 100%;
-  overflow: hidden; /* Ensure content respects border radius */
+  overflow: hidden; 
   margin: 80px; 
   margin-left: 160px;
 }

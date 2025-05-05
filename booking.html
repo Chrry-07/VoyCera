@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VoyCera - Ride Booking</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9); /* Softer pastel gradient */
+      color: #333;
+    }
+
+    #map {
+      height: 500px;
+      width: 90%;
+      margin: 0 auto 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      
+    }
+
+    .fare-box {
+      
+      border: 2px solid #55b99e;
+      background-color: #e0fff4;
+      border-radius: 16px;
+      padding: 25px;
+      max-width: 400px;
+      margin: 0 auto 40px;
+      box-shadow: 0 4px 20px rgba(30, 201, 172, 0.4);
+      text-align: center;
+      font-size: 18px;
+      color: #00695c;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .fare-box span {
+      display: block;
+      margin: 12px 0;
+    }
+
+    .vehicle-selection {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+      margin-top: 30px;
+    }
+
+    .vehicle-selection img {
+      width: 180px;
+      height: 120px;
+      cursor: pointer;
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(30, 201, 172, 0.3);
+    }
+
+    .vehicle-selection img.selected {
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 20px rgba(30, 201, 172, 0.8);
+      transform: scale(1.1);
+    }
+
+    p {
+      font-size: 36px;
+      color: #006f5f;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #fff;
+      box-shadow: 0 -5px 20px rgba(30, 201, 172, 0.5);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      animation: slideUp 0.3s ease-out;
+      overflow-y: auto;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-content {
+      height: 100%;
+      width:100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      color: #006f5f;
+    }
+
+    .modal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .modal-content th, .modal-content td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .modal-content tr:hover {
+      background-color: #BAE8D4;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      font-size: 28px;
+      font-weight: bold;
+      color: #999;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .modal-content th, .modal-content td {
+      text-align: center;
+    }
+
+    p.table {
+      color: #69d9b0;
+      font-size: 32px;
+    }
+    @media screen and (max-width: 768px) {
+      .vehicle-selection {
+        flex-direction: column;
+        align-items: center;
+        gap:50px;
+      }
+    
+      .vehicle-selection img {
+        width: 80%;
+        max-width: 150px;
+        height: auto;
+      }
+    
+      .fare-box {
+        font-size: 16px;
+        padding: 20px;
+      }
+    
+      p {
+        font-size: 28px;
+      }
+    
+      .modal-content table {
+        font-size: 16px;
+      }
+    
+      .modal {
+        height: 70%;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .fare-box {
+        font-size: 14px;
+      }
+    
+      p {
+        font-size: 24px;
+      }
+    
+      .modal-content table {
+        font-size: 14px;
+      }
+    
+      .modal-content th, .modal-content td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <p>VoyCera - Ride Booking</p>
+
+  <div class="vehicle-selection">
+    <img src="car.png" id="car" class="selected" title="Car">
+    <img src="bike.png" id="bike" title="Bike">
+    <img src="auto.png" id="auto" title="Auto">
+  </div>
+
+  <div id="map"></div>
+
+  <div class="fare-box">
+    <span id="distance">Distance: Not calculated</span>
+    <span id="fare">Fare: ₹0</span>
+    <button onclick="showPaymentPopup()" style="margin-top: 20px; padding: 12px 24px; font-size: 16px; background-color: #009688; color: white; border: none; border-radius: 8px; cursor: pointer;">Book Ride</button>
+
+  </div>
+
+  <!-- Fare Selection Modal -->
+  <div id="fareModal" class="modal">
+    <div class="modal-content">
+      <div class="close-btn" onclick="closeModal()">×</div>
+      <p class="table">Select Your Ride</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>Rate/km</th>
+            <th>Total Fare</th>
+          </tr>
+        </thead>
+        <tbody id="fareTableBody">
+          <!-- Dynamic rows -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  window.onload = function () {
+    const apiKey = "5b3ce3597851110001cf6248ad4855180eb34974baccec9b98e4b01f";
+    const rates = { car: 15, bike: 10, auto: 12 };
+    let selectedVehicle = 'car';
+    let currentKm = 0;
+
+    const map = L.map('map').setView([17.385044, 78.486671], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let pickupMarker = null, dropMarker = null, routeLine = null;
+
+    const pickupLocation = localStorage.getItem('pickupLocation');
+    const dropLocation = localStorage.getItem('dropLocation');
+
+    if (!pickupLocation || !dropLocation) {
+      alert("No locations found in storage.");
+      return;
+    }
+
+    function geocode(query, callback) {
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length > 0) {
+            const latlng = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+            callback(latlng);
+          } else {
+            alert("Location not found: " + query);
+          }
+        });
+    }
+
+    function calculateFare(km) {
+      const rate = rates[selectedVehicle];
+      const fare = (rate * km).toFixed(2);
+      document.getElementById('distance').textContent = `Distance: ${km} km`;
+      document.getElementById('fare').textContent = `Fare: ₹${fare}`;
+    }
+
+    function showFareModal(km) {
+      const tbody = document.getElementById("fareTableBody");
+      tbody.innerHTML = '';
+
+      for (const [vehicle, rate] of Object.entries(rates)) {
+        const fare = (rate * km).toFixed(2);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${vehicle.charAt(0).toUpperCase() + vehicle.slice(1)}</td>
+          <td>₹${rate}</td>
+          <td>₹${fare}</td>
+        `;
+        row.addEventListener('click', () => {
+          selectedVehicle = vehicle;
+          document.querySelectorAll('.vehicle-selection img').forEach(i => i.classList.remove('selected'));
+          document.getElementById(vehicle).classList.add('selected');
+          calculateFare(km);
+          closeModal();
+        });
+        tbody.appendChild(row);
+      }
+
+      document.getElementById("fareModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("fareModal").style.display = "none";
+    }
+
+    function calculateRoute() {
+      const coords = {
+        pickup: pickupMarker.getLatLng(),
+        drop: dropMarker.getLatLng()
+      };
+
+      fetch('https://api.openrouteservice.org/v2/directions/driving-car/geojson', {
+        method: 'POST',
+        headers: {
+          'Authorization': apiKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          coordinates: [
+            [coords.pickup.lng, coords.pickup.lat],
+            [coords.drop.lng, coords.drop.lat]
+          ]
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          const distance = data.features[0].properties.summary.distance;
+          const km = (distance / 1000).toFixed(2);
+          currentKm = km;
+
+          calculateFare(km);
+
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.geoJSON(data).addTo(map);
+          map.fitBounds(routeLine.getBounds());
+
+          showFareModal(km);
+        });
+    }
+
+    // Image-based vehicle selection
+    document.querySelectorAll('.vehicle-selection img').forEach(img => {
+      img.addEventListener('click', () => {
+        document.querySelectorAll('.vehicle-selection img').forEach(i => i.classList.remove('selected'));
+        img.classList.add('selected');
+        selectedVehicle = img.id;
+        calculateFare(currentKm);
+      });
+    });
+
+    geocode(pickupLocation, latlng => {
+      pickupMarker = L.marker(latlng).addTo(map).bindPopup('Pickup');
+      map.setView(latlng, 13);
+    });
+
+    geocode(dropLocation, latlng => {
+      dropMarker = L.marker(latlng).addTo(map).bindPopup('Drop');
+      calculateRoute();
+    });
+  }
+  function showPaymentPopup() {
+    document.getElementById('paymentPopup').style.display = 'flex';
+  }
+  
+  function closePopup() {
+    document.getElementById('paymentPopup').style.display = 'none';
+  }
+  
+  function selectPayment(method) {
+    closePopup();
+    alert("Ride booked! Payment mode: " + method);
+  }
+  
+</script>
+<div id="paymentPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: center;">
+  <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 300px;">
+    <h2>Select Payment Method</h2>
+    <button onclick="selectPayment('Cash')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Cash</button>
+    <button onclick="selectPayment('Card')" style="margin: 10px; padding: 10px 20px; background-color: #009688; color: white; border: none; border-radius: 6px;">Card</button>
+    <br/><br/>
+    <button onclick="closePopup()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer;">Cancel</button>
+  </div>
+</div>
+
+</body>
+</html>
